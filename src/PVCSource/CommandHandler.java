@@ -2,12 +2,10 @@ package PVCSource;
 
 import org.apache.commons.cli.*;
 
-public class PVCCommandHandler {
+public class CommandHandler implements Handler<CommandLine> {
 
     public static void main(String[] args) {
-        Options options = new Options();
-
-        options.addOption("i", "init", false, "Repository initialization");
+        Options options = Commands.getPVCOptions();
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;
@@ -20,11 +18,16 @@ public class PVCCommandHandler {
             helpFormatter.printHelp("pvc", options);
         }
 
-        if (cmd.hasOption("i")) {
+        CommandHandler commandHandler = new CommandHandler();
+        commandHandler.handle(cmd);
+
+    }
+
+    public void handle(CommandLine cmd) {
+        if (cmd.hasOption(Commands.initializationOptName)) {
             System.out.println("Initialization of repository...");
             System.out.println("Done!");
         }
-
     }
 
 }
