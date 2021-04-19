@@ -8,6 +8,9 @@ public class RepositoryInitializator implements Handler<String> {
     private final String pvcMainFolderName = "\\.pvc";
     private final String pvcCommitsFolder = "\\commits";
 
+    private final String pvcMainFolderName = "\\.pvc";
+    private final String pvcCommitsFolder = "\\commits";
+
     public void handle(String path) {
 
         boolean isSuccesfullyCreated = new File(path + this.pvcMainFolderName).mkdir();
