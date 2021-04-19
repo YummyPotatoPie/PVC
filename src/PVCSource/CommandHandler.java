@@ -16,6 +16,8 @@ public class CommandHandler implements Handler<CommandLine> {
         catch (ParseException pe) {
             HelpFormatter helpFormatter = new HelpFormatter();
             helpFormatter.printHelp("pvc", options);
+
+            System.exit(1);
         }
 
         CommandHandler commandHandler = new CommandHandler();
@@ -25,8 +27,10 @@ public class CommandHandler implements Handler<CommandLine> {
 
     public void handle(CommandLine cmd) {
         if (cmd.hasOption(Commands.initializationOptName)) {
-            System.out.println("Initialization of repository...");
-            System.out.println("Done!");
+
+            RepositoryInitializator repInitializator = new RepositoryInitializator();
+            repInitializator.handle(System.getProperty("user.dir"));
+
         }
     }
 
