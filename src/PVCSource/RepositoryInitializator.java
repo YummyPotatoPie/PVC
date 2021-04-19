@@ -7,6 +7,7 @@ public class RepositoryInitializator implements Handler<String> {
 
     private final String pvcMainFolderName = "\\.pvc";
     private final String pvcCommitsFolder = "\\commits";
+    private final String pvcBranchesFolder = "\\branches";
 
     public void handle(String path) {
 
