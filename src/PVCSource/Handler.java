@@ -1,6 +1,6 @@
 package PVCSource;
 
-public interface Handler<T> {
+interface Handler<T> {
 
     void handle(T request);
 
