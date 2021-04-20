@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import pvc.Exceptions.*;
 
-public class RepositoryInitializator implements Handler<String> {
+public class RepositoryInitializer implements Handler<String> {
 
     private final String pvcMainFolderName = "\\.pvc";
     private final String pvcCommitsFolder = "\\commits";
@@ -12,11 +12,12 @@ public class RepositoryInitializator implements Handler<String> {
 
     public void handle(String path) throws PVCException {
 
-        boolean isSuccesfullyCreated = new File(path + this.pvcMainFolderName).mkdir();
+        boolean isSuccessfullyCreated = new File(path + this.pvcMainFolderName).mkdir();
 
-        if (isSuccesfullyCreated) {
+        if (isSuccessfullyCreated) {
             setHiddenAttribute(new File(path + this.pvcMainFolderName));
-            createFolderSystem(path + this.pvcMainFolderName);
+            createCommitFolderSystem(path + this.pvcMainFolderName);
+            createBranchesFolder(path + this.pvcMainFolderName);
         }
         else
             throw new InitializationError();
@@ -32,7 +33,7 @@ public class RepositoryInitializator implements Handler<String> {
         }
     }
 
-    private void createFolderSystem(String path) throws CreatingFolderSystemError {
+    private void createCommitFolderSystem(String path) throws CreatingFolderSystemError {
         new File(path + this.pvcCommitsFolder).mkdir();
 
         for (int i = 17; i < 256; i++) {
@@ -45,6 +46,13 @@ public class RepositoryInitializator implements Handler<String> {
                 throw new CreatingFolderSystemError();
             }
         }
+    }
+
+    private void createBranchesFolder(String path) throws CreatingFolderSystemError {
+        if (new File(path + this.pvcBranchesFolder).mkdir())
+            return;
+        else
+            throw new CreatingFolderSystemError();
     }
 
 }
