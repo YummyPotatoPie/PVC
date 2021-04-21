@@ -1,6 +1,7 @@
-package PVCSource;
+package pvc;
 
 import org.apache.commons.cli.*;
+import pvc.Exceptions.PVCException;
 
 public class CommandHandler implements Handler<CommandLine> {
 
@@ -21,15 +22,21 @@ public class CommandHandler implements Handler<CommandLine> {
         }
 
         CommandHandler commandHandler = new CommandHandler();
-        commandHandler.handle(cmd);
+
+        try {
+            commandHandler.handle(cmd);
+        }
+        catch (PVCException pvce) {
+            System.out.println(pvce.getMessage());
+        }
 
     }
 
-    public void handle(CommandLine cmd) {
+    public void handle(CommandLine cmd) throws PVCException  {
         if (cmd.hasOption(Commands.initializationOptName)) {
 
-            RepositoryInitializator repInitializator = new RepositoryInitializator();
-            repInitializator.handle(System.getProperty("user.dir"));
+            RepositoryInitializer repInitializer = new RepositoryInitializer();
+            repInitializer.handle(System.getProperty("user.dir"));
 
         }
     }
