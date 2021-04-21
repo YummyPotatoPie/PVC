@@ -46,11 +46,13 @@ public class RepositoryInitializer implements Handler<String> {
     }
 
     private void createCommitFolderSystem(String path) throws CreatingFolderSystemError {
-        new File(path + pvcCommitsFolder).mkdir();
+        if (!(new File(path + pvcCommitsFolder).mkdir())) {
+            emergencyDeletion(new File(path));
+            throw new CreatingFolderSystemError();
+        }
 
         for (int i = 16; i < 256; i++) {
-            if (new File(path + pvcCommitsFolder + "\\" + Integer.toHexString(i)).mkdir()) continue;
-            else {
+            if (!(new File(path + pvcCommitsFolder + "\\" + Integer.toHexString(i)).mkdir())) {
                 emergencyDeletion(new File(path + pvcMainFolderName));
                 throw new CreatingFolderSystemError();
             }
@@ -59,10 +61,13 @@ public class RepositoryInitializer implements Handler<String> {
 
     private void createBranchesFolder(String path) throws CreatingFolderSystemError, ProcessExecutionError {
         if (new File(path + pvcBranchesFolder).mkdir()) {
-            File defaultBranchFile = new File(path + pvcBranchesFolder);
+            File defaultBranchFile = new File(path + pvcBranchesFolder + "\\" + defaultBranchName);
 
             try {
-                defaultBranchFile.createNewFile();
+                if (!defaultBranchFile.createNewFile()) {
+                    emergencyDeletion(new File(path));
+                    throw new ProcessExecutionError();
+                }
             }
             catch (IOException ioe) {
                 emergencyDeletion(new File(path));
@@ -111,10 +116,12 @@ public class RepositoryInitializer implements Handler<String> {
         File addFile = new File(path + pvcMainFolderName, pvcAddFile);
 
         try {
-            addFile.createNewFile();
+            if (!addFile.createNewFile())
+                throw new ProcessExecutionError();
         }
         catch (IOException ioe) {
             emergencyDeletion(new File(path + pvcMainFolderName));
+            throw new ProcessExecutionError();
         }
     }
 
@@ -125,8 +132,8 @@ public class RepositoryInitializer implements Handler<String> {
             if (directoryFiles != null)
                 for (File f: directoryFiles)
                     emergencyDeletion(f);
-
         }
+
         file.delete();
     }
 
