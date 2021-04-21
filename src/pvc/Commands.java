@@ -5,7 +5,7 @@ import org.apache.commons.cli.Option;
 
 class Commands {
 
-    private static Options pvcOptions = new Options();
+    private final static Options pvcOptions = new Options();
 
     public final static String initializationOptName = "init";
     public final static String initializationOptDesc = "Repository initialization";
@@ -25,9 +25,18 @@ class Commands {
             .numberOfArgs(2)
             .build();
 
+    public final static String addFileOptName = "add";
+    public final static String addFileOptDesc = "Saves changes in repository";
+    private final static Option addOpt = Option.builder()
+            .longOpt(addFileOptName)
+            .desc(addFileOptDesc)
+            .hasArg(true)
+            .build();
+
     public static Options getPVCOptions() {
         pvcOptions.addOption(initialization);
         pvcOptions.addOption(contributorConfig);
+        pvcOptions.addOption(addOpt);
         return pvcOptions;
     }
 
