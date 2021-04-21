@@ -1,7 +1,9 @@
 package pvc;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+
 import pvc.Exceptions.*;
 
 public class RepositoryInitializer implements Handler<String> {
@@ -9,6 +11,8 @@ public class RepositoryInitializer implements Handler<String> {
     private final String pvcMainFolderName = "\\.pvc";
     private final String pvcCommitsFolder = "\\commits";
     private final String pvcBranchesFolder = "\\branches";
+    private final String pvcConfigFileName = "config";
+    private final String pvcHEADFileName = "HEAD";
 
     public void handle(String path) throws PVCException {
 
@@ -18,6 +22,8 @@ public class RepositoryInitializer implements Handler<String> {
             setHiddenAttribute(new File(path + this.pvcMainFolderName));
             createCommitFolderSystem(path + this.pvcMainFolderName);
             createBranchesFolder(path + this.pvcMainFolderName);
+            createConfigFile(path);
+            createHEADFile(path);
         }
         else
             throw new InitializationError();
@@ -53,6 +59,32 @@ public class RepositoryInitializer implements Handler<String> {
             return;
         else
             throw new CreatingFolderSystemError();
+    }
+
+    private void createConfigFile(String path) throws ProcessExecutionError {
+        File configFile = new File(path + pvcMainFolderName, pvcConfigFileName);
+
+        try {
+            configFile.createNewFile();
+        }
+        catch (IOException ioe) {
+            throw new ProcessExecutionError();
+        }
+    }
+
+    private void createHEADFile(String path) throws ProcessExecutionError {
+        File HEADFile = new File(path + pvcMainFolderName, pvcHEADFileName);
+
+        try {
+            HEADFile.createNewFile();
+
+            FileWriter writer = new FileWriter(path + pvcMainFolderName + "\\" + pvcHEADFileName);
+            writer.write("main null");
+            writer.close();
+        }
+        catch (IOException ioe) {
+            throw new ProcessExecutionError();
+        }
     }
 
 }
