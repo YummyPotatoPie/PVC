@@ -3,8 +3,6 @@ package pvc;
 import org.apache.commons.cli.*;
 import pvc.Exceptions.PVCException;
 
-import java.util.List;
-
 public class CommandHandler implements Handler<CommandLine> {
 
     public static void main(String[] args) {
@@ -45,6 +43,12 @@ public class CommandHandler implements Handler<CommandLine> {
 
             ContributorConfig contConfig = new ContributorConfig();
             contConfig.handle(cmd.getOptionValues(Commands.contributorConfigOptName));
+
+        }
+        if (cmd.hasOption(Commands.addFileOptName)) {
+
+            FileAdder fileAdder = new FileAdder();
+            fileAdder.handle(cmd.getOptionValues(Commands.addFileOptName)[0]);
 
         }
     }
