@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class ContributorConfig implements Handler<String[]> {
 
     public void handle(String[] configArgs) throws ConfigFileCorruptedError, ProcessExecutionError {
-        if (isRepositoryExist()) {
+        if (Checker.isRepositoryExist()) {
             try {
                 String configFilePath = System.getProperty("user.dir") + RepositoryInitializer.pvcMainFolderName
                         + "\\" + RepositoryInitializer.pvcConfigFileName;
@@ -46,10 +46,6 @@ public class ContributorConfig implements Handler<String[]> {
         }
         else
             throw new ConfigFileCorruptedError();
-    }
-
-    private boolean isRepositoryExist() {
-        return new File(System.getProperty("user.dir") + RepositoryInitializer.pvcMainFolderName).exists();
     }
 
 }
