@@ -78,7 +78,7 @@ public class RepositoryInitializer implements Handler<String> {
 
         try {
             if (configFile.createNewFile()) {
-                FileWriter writer = new FileWriter(path + this.pvcConfigFileName);
+                FileWriter writer = new FileWriter(path + this.pvcMainFolderName + "\\" +this.pvcConfigFileName);
                 writer.write(System.getProperty("user.name") + " " + this.nullString);
                 writer.close();
             }
