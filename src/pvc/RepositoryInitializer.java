@@ -8,24 +8,24 @@ import pvc.Exceptions.*;
 
 public class RepositoryInitializer implements Handler<String> {
 
-    private final String pvcMainFolderName = "\\.pvc";
-    private final String pvcCommitsFolder = "\\commits";
-    private final String pvcBranchesFolder = "\\branches";
-    private final String pvcConfigFileName = "config";
-    private final String pvcHEADFileName = "HEAD";
-    private final String pvcAddFile = "add";
-    private final String defaultBranchName = "main";
-    private final String nullString = "null";
-    private final String zeroCommitString = "0";
+    public final static String pvcMainFolderName = "\\.pvc";
+    public final static String pvcCommitsFolder = "\\commits";
+    public final static String pvcBranchesFolder = "\\branches";
+    public final static String pvcConfigFileName = "config";
+    public final static String pvcHEADFileName = "HEAD";
+    public final static String pvcAddFile = "add";
+    public final static String defaultBranchName = "main";
+    public final static String nullString = "null";
+    public final static String zeroCommitString = "0";
 
     public void handle(String path) throws PVCException {
 
-        boolean isSuccessfullyCreated = new File(path + this.pvcMainFolderName).mkdir();
+        boolean isSuccessfullyCreated = new File(path + pvcMainFolderName).mkdir();
 
         if (isSuccessfullyCreated) {
-            setHiddenAttribute(new File(path + this.pvcMainFolderName));
-            createCommitFolderSystem(path + this.pvcMainFolderName);
-            createBranchesFolder(path + this.pvcMainFolderName);
+            setHiddenAttribute(new File(path + pvcMainFolderName));
+            createCommitFolderSystem(path + pvcMainFolderName);
+            createBranchesFolder(path + pvcMainFolderName);
             createConfigFile(path);
             createHEADFile(path);
             createAddFile(path);
@@ -46,10 +46,10 @@ public class RepositoryInitializer implements Handler<String> {
     }
 
     private void createCommitFolderSystem(String path) throws CreatingFolderSystemError {
-        new File(path + this.pvcCommitsFolder).mkdir();
+        new File(path + pvcCommitsFolder).mkdir();
 
         for (int i = 16; i < 256; i++) {
-            if (new File(path + this.pvcCommitsFolder + "\\" + Integer.toHexString(i)).mkdir()) continue;
+            if (new File(path + pvcCommitsFolder + "\\" + Integer.toHexString(i)).mkdir()) continue;
             else {
                 emergencyDeletion(new File(path + pvcMainFolderName));
                 throw new CreatingFolderSystemError();
@@ -58,8 +58,8 @@ public class RepositoryInitializer implements Handler<String> {
     }
 
     private void createBranchesFolder(String path) throws CreatingFolderSystemError, ProcessExecutionError {
-        if (new File(path + this.pvcBranchesFolder).mkdir()) {
-            File defaultBranchFile = new File(path + this.pvcBranchesFolder);
+        if (new File(path + pvcBranchesFolder).mkdir()) {
+            File defaultBranchFile = new File(path + pvcBranchesFolder);
 
             try {
                 defaultBranchFile.createNewFile();
@@ -76,45 +76,45 @@ public class RepositoryInitializer implements Handler<String> {
     }
 
     private void createConfigFile(String path) throws ProcessExecutionError {
-        File configFile = new File(path + this.pvcMainFolderName, this.pvcConfigFileName);
+        File configFile = new File(path + pvcMainFolderName, pvcConfigFileName);
 
         try {
             if (configFile.createNewFile()) {
-                FileWriter writer = new FileWriter(path + this.pvcMainFolderName + "\\" +this.pvcConfigFileName);
-                writer.write(System.getProperty("user.name") + " " + this.nullString);
+                FileWriter writer = new FileWriter(path + pvcMainFolderName + "\\" +pvcConfigFileName);
+                writer.write(System.getProperty("user.name") + " " + nullString);
                 writer.close();
             }
         }
         catch (IOException ioe) {
-            emergencyDeletion(new File(path + this.pvcMainFolderName));
+            emergencyDeletion(new File(path + pvcMainFolderName));
             throw new ProcessExecutionError();
         }
     }
 
     private void createHEADFile(String path) throws ProcessExecutionError {
-        File HEADFile = new File(path + this.pvcMainFolderName, this.pvcHEADFileName);
+        File HEADFile = new File(path + pvcMainFolderName, pvcHEADFileName);
 
         try {
             if (HEADFile.createNewFile()) {
-                FileWriter writer = new FileWriter(path + this.pvcMainFolderName + "\\" + this.pvcHEADFileName);
-                writer.write(this.defaultBranchName + " " + this.nullString + " " + this.zeroCommitString);
+                FileWriter writer = new FileWriter(path + pvcMainFolderName + "\\" + pvcHEADFileName);
+                writer.write(defaultBranchName + " " + nullString + " " + zeroCommitString);
                 writer.close();
             }
         }
         catch (IOException ioe) {
-            emergencyDeletion(new File(path + this.pvcMainFolderName));
+            emergencyDeletion(new File(path + pvcMainFolderName));
             throw new ProcessExecutionError();
         }
     }
 
     private void createAddFile(String path) throws ProcessExecutionError {
-        File addFile = new File(path + this.pvcMainFolderName, this.pvcAddFile);
+        File addFile = new File(path + pvcMainFolderName, pvcAddFile);
 
         try {
             addFile.createNewFile();
         }
         catch (IOException ioe) {
-            emergencyDeletion(new File(path + this.pvcMainFolderName));
+            emergencyDeletion(new File(path + pvcMainFolderName));
         }
     }
 
