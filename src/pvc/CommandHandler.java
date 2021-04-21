@@ -3,6 +3,8 @@ package pvc;
 import org.apache.commons.cli.*;
 import pvc.Exceptions.PVCException;
 
+import java.util.List;
+
 public class CommandHandler implements Handler<CommandLine> {
 
     public static void main(String[] args) {
@@ -38,6 +40,9 @@ public class CommandHandler implements Handler<CommandLine> {
             RepositoryInitializer repInitializer = new RepositoryInitializer();
             repInitializer.handle(System.getProperty("user.dir"));
 
+        }
+        if (cmd.hasOption(Commands.contributorConfigOptName)) {
+            
         }
     }
 
