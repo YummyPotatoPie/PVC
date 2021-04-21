@@ -14,7 +14,7 @@ public class RepositoryInitializer implements Handler<String> {
     private final String pvcConfigFileName = "config";
     private final String pvcHEADFileName = "HEAD";
     private final String defaultBranchName = "main";
-    private final String nullCommitString = "null";
+    private final String nullString = "null";
     private final String zeroCommitString = "0";
 
     public void handle(String path) throws PVCException {
@@ -77,7 +77,11 @@ public class RepositoryInitializer implements Handler<String> {
         File configFile = new File(path + this.pvcMainFolderName, this.pvcConfigFileName);
 
         try {
-            configFile.createNewFile();
+            if (configFile.createNewFile()) {
+                FileWriter writer = new FileWriter(path + this.pvcConfigFileName);
+                writer.write(System.getProperty("user.name") + " " + this.nullString);
+                writer.close();
+            }
         }
         catch (IOException ioe) {
             emergencyDeletion(new File(path + this.pvcMainFolderName));
@@ -91,7 +95,7 @@ public class RepositoryInitializer implements Handler<String> {
         try {
             if (HEADFile.createNewFile()) {
                 FileWriter writer = new FileWriter(path + this.pvcMainFolderName + "\\" + this.pvcHEADFileName);
-                writer.write(this.defaultBranchName + " " + this.nullCommitString + " " + this.zeroCommitString);
+                writer.write(this.defaultBranchName + " " + this.nullString + " " + this.zeroCommitString);
                 writer.close();
             }
         }
