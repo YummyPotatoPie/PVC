@@ -32,7 +32,7 @@ public class RepositoryInitializer implements Handler<String> {
             throw new InitializationError();
     }
 
-    private void setHiddenAttribute(File file) throws PVCException {
+    private void setHiddenAttribute(File file) throws ProcessExecutionError {
         try {
             Process createHiddenFile = Runtime.getRuntime().exec("attrib +H " + file.getPath());
             createHiddenFile.waitFor();
