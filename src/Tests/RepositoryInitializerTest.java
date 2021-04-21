@@ -1,22 +1,27 @@
 package Tests;
 
 import pvc.Exceptions.PVCException;
-import pvc.RepositoryInitializator;
+import pvc.RepositoryInitializer;
 import org.junit.Test;
 
-public class RepositoryInitializatorTest {
+import java.io.File;
+
+public class RepositoryInitializerTest {
 
     @Test
     public void createMainFolderTest() {
 
-        RepositoryInitializator repInit = new RepositoryInitializator();
+        RepositoryInitializer repInit = new RepositoryInitializer();
 
         try {
             repInit.handle("src\\Tests\\RepositoryInitializatorTestFolder");
         }
         catch (PVCException pvce) {
-            pvce.getMessage();
+            System.out.println(pvce.getMessage());
         }
+
+        File pvcMainFolder = new File("src\\Tests\\RepositoryInitializatorTestFolder\\.pvc");
+        pvcMainFolder.delete();
 
     }
 
