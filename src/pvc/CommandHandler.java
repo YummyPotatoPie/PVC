@@ -43,6 +43,9 @@ public class CommandHandler implements Handler<CommandLine> {
         }
         if (cmd.hasOption(Commands.contributorConfigOptName)) {
 
+            ContributorConfig contConfig = new ContributorConfig();
+            contConfig.handle(cmd.getOptionValues(Commands.contributorConfigOptName));
+
         }
     }
 
