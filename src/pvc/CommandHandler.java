@@ -42,7 +42,7 @@ public class CommandHandler implements Handler<CommandLine> {
 
         }
         if (cmd.hasOption(Commands.contributorConfigOptName)) {
-            
+
         }
     }
 
