@@ -9,14 +9,25 @@ class Commands {
 
     public final static String initializationOptName = "init";
     public final static String initializationOptDesc = "Repository initialization";
-    private static Option initialization = Option.builder()
+    private final static Option initialization = Option.builder()
             .longOpt(initializationOptName)
-            .hasArg(false)
             .desc(initializationOptDesc)
+            .hasArg(false)
+            .build();
+
+    public final static String contributorConfigOptName = "config";
+    public final static String contributorConfigOptDesc = "Changing the configuration of the contributor";
+    private final static Option contributorConfig = Option.builder()
+            .longOpt(contributorConfigOptName)
+            .desc(contributorConfigOptDesc)
+            .hasArgs()
+            .optionalArg(true)
+            .numberOfArgs(2)
             .build();
 
     public static Options getPVCOptions() {
         pvcOptions.addOption(initialization);
+        pvcOptions.addOption(contributorConfig);
         return pvcOptions;
     }
 
