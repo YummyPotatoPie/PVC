@@ -13,6 +13,9 @@ public class RepositoryInitializer implements Handler<String> {
     private final String pvcBranchesFolder = "\\branches";
     private final String pvcConfigFileName = "config";
     private final String pvcHEADFileName = "HEAD";
+    private final String defaultBranchName = "main";
+    private final String nullCommitString = "null";
+    private final String zeroCommitString = "0";
 
     public void handle(String path) throws PVCException {
 
@@ -44,8 +47,7 @@ public class RepositoryInitializer implements Handler<String> {
         new File(path + this.pvcCommitsFolder).mkdir();
 
         for (int i = 17; i < 256; i++) {
-            if (new File(path + this.pvcCommitsFolder + "\\" + Integer.toHexString(i)).mkdir())
-                continue;
+            if (new File(path + this.pvcCommitsFolder + "\\" + Integer.toHexString(i)).mkdir()) continue;
             else {
                 emergencyDeletion(new File(path + pvcMainFolderName));
                 throw new CreatingFolderSystemError();
@@ -53,8 +55,18 @@ public class RepositoryInitializer implements Handler<String> {
         }
     }
 
-    private void createBranchesFolder(String path) throws CreatingFolderSystemError {
-        if (new File(path + this.pvcBranchesFolder).mkdir()) return;
+    private void createBranchesFolder(String path) throws CreatingFolderSystemError, ProcessExecutionError {
+        if (new File(path + this.pvcBranchesFolder).mkdir()) {
+            File defaultBranchFile = new File(path + this.pvcBranchesFolder);
+
+            try {
+                defaultBranchFile.createNewFile();
+            }
+            catch (IOException ioe) {
+                emergencyDeletion(new File(path));
+                throw new ProcessExecutionError();
+            }
+        }
         else {
             emergencyDeletion(new File(path + pvcMainFolderName));
             throw new CreatingFolderSystemError();
@@ -79,7 +91,7 @@ public class RepositoryInitializer implements Handler<String> {
         try {
             if (HEADFile.createNewFile()) {
                 FileWriter writer = new FileWriter(path + this.pvcMainFolderName + "\\" + this.pvcHEADFileName);
-                writer.write("main null");
+                writer.write(this.defaultBranchName + " " + this.nullCommitString + " " + this.zeroCommitString);
                 writer.close();
             }
         }
