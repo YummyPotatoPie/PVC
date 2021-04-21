@@ -13,6 +13,7 @@ public class RepositoryInitializer implements Handler<String> {
     private final String pvcBranchesFolder = "\\branches";
     private final String pvcConfigFileName = "config";
     private final String pvcHEADFileName = "HEAD";
+    private final String pvcAddFile = "add";
     private final String defaultBranchName = "main";
     private final String nullString = "null";
     private final String zeroCommitString = "0";
@@ -27,6 +28,7 @@ public class RepositoryInitializer implements Handler<String> {
             createBranchesFolder(path + this.pvcMainFolderName);
             createConfigFile(path);
             createHEADFile(path);
+            createAddFile(path);
         }
         else
             throw new InitializationError();
@@ -46,7 +48,7 @@ public class RepositoryInitializer implements Handler<String> {
     private void createCommitFolderSystem(String path) throws CreatingFolderSystemError {
         new File(path + this.pvcCommitsFolder).mkdir();
 
-        for (int i = 17; i < 256; i++) {
+        for (int i = 16; i < 256; i++) {
             if (new File(path + this.pvcCommitsFolder + "\\" + Integer.toHexString(i)).mkdir()) continue;
             else {
                 emergencyDeletion(new File(path + pvcMainFolderName));
@@ -102,6 +104,17 @@ public class RepositoryInitializer implements Handler<String> {
         catch (IOException ioe) {
             emergencyDeletion(new File(path + this.pvcMainFolderName));
             throw new ProcessExecutionError();
+        }
+    }
+
+    private void createAddFile(String path) throws ProcessExecutionError {
+        File addFile = new File(path + this.pvcMainFolderName, this.pvcAddFile);
+
+        try {
+            addFile.createNewFile();
+        }
+        catch (IOException ioe) {
+            emergencyDeletion(new File(path + this.pvcMainFolderName));
         }
     }
 
