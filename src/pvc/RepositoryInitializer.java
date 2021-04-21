@@ -35,6 +35,7 @@ public class RepositoryInitializer implements Handler<String> {
             createHiddenFile.waitFor();
         }
         catch (IOException | InterruptedException e) {
+            emergencyDeletion(file);
             throw new ProcessExecutionError();
         }
     }
@@ -46,45 +47,58 @@ public class RepositoryInitializer implements Handler<String> {
             if (new File(path + this.pvcCommitsFolder + "\\" + Integer.toHexString(i)).mkdir())
                 continue;
             else {
-                File pvcMainFolder = new File(path);
-                pvcMainFolder.delete();
-
+                emergencyDeletion(new File(path + pvcMainFolderName));
                 throw new CreatingFolderSystemError();
             }
         }
     }
 
     private void createBranchesFolder(String path) throws CreatingFolderSystemError {
-        if (new File(path + this.pvcBranchesFolder).mkdir())
-            return;
-        else
+        if (new File(path + this.pvcBranchesFolder).mkdir()) return;
+        else {
+            emergencyDeletion(new File(path + pvcMainFolderName));
             throw new CreatingFolderSystemError();
+        }
     }
 
     private void createConfigFile(String path) throws ProcessExecutionError {
-        File configFile = new File(path + pvcMainFolderName, pvcConfigFileName);
+        File configFile = new File(path + this.pvcMainFolderName, this.pvcConfigFileName);
 
         try {
             configFile.createNewFile();
         }
         catch (IOException ioe) {
+            emergencyDeletion(new File(path + this.pvcMainFolderName));
             throw new ProcessExecutionError();
         }
     }
 
     private void createHEADFile(String path) throws ProcessExecutionError {
-        File HEADFile = new File(path + pvcMainFolderName, pvcHEADFileName);
+        File HEADFile = new File(path + this.pvcMainFolderName, this.pvcHEADFileName);
 
         try {
-            HEADFile.createNewFile();
-
-            FileWriter writer = new FileWriter(path + pvcMainFolderName + "\\" + pvcHEADFileName);
-            writer.write("main null");
-            writer.close();
+            if (HEADFile.createNewFile()) {
+                FileWriter writer = new FileWriter(path + this.pvcMainFolderName + "\\" + this.pvcHEADFileName);
+                writer.write("main null");
+                writer.close();
+            }
         }
         catch (IOException ioe) {
+            emergencyDeletion(new File(path + this.pvcMainFolderName));
             throw new ProcessExecutionError();
         }
+    }
+
+    private void emergencyDeletion(File file) {
+        if (file.isDirectory()) {
+            File[] directoryFiles = file.listFiles();
+
+            if (directoryFiles != null)
+                for (File f: directoryFiles)
+                    emergencyDeletion(f);
+
+        }
+        file.delete();
     }
 
 }
