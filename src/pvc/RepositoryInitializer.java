@@ -24,7 +24,7 @@ public class RepositoryInitializer implements Handler<String> {
 
         if (isSuccessfullyCreated) {
             setHiddenAttribute(new File(path + pvcMainFolderName));
-            createCommitFolderSystem(path + pvcMainFolderName);
+            createCommitFolder(path + pvcMainFolderName);
             createBranchesFolder(path + pvcMainFolderName);
             createConfigFile(path);
             createHEADFile(path);
@@ -45,17 +45,10 @@ public class RepositoryInitializer implements Handler<String> {
         }
     }
 
-    private void createCommitFolderSystem(String path) throws CreatingFolderSystemError {
+    private void createCommitFolder(String path) throws CreatingFolderSystemError {
         if (!(new File(path + pvcCommitsFolder).mkdir())) {
             emergencyDeletion(new File(path));
             throw new CreatingFolderSystemError();
-        }
-
-        for (int i = 16; i < 256; i++) {
-            if (!(new File(path + pvcCommitsFolder + "\\" + Integer.toHexString(i)).mkdir())) {
-                emergencyDeletion(new File(path + pvcMainFolderName));
-                throw new CreatingFolderSystemError();
-            }
         }
     }
 
