@@ -51,6 +51,12 @@ public class CommandHandler implements Handler<CommandLine> {
             fileAdder.handle(cmd.getOptionValues(Commands.addFileOptName)[0]);
 
         }
+        if (cmd.hasOption(Commands.commitOptName)) {
+
+            Committer commiter = new Committer();
+            commiter.handle("message");
+
+        }
     }
 
 }
