@@ -43,7 +43,7 @@ public class FileAdder implements Handler<String> {
                 RepositoryInitializer.pvcMainFolderName) + "\\" + RepositoryInitializer.pvcAddFile);
 
         while (scanner.hasNextLine()) {
-            if (scanner.nextLine() == filePath) {
+            if (scanner.nextLine().equals(filePath)) {
                 scanner.close();
                 return false;
             }
