@@ -1,7 +1,9 @@
 package pvc;
 
 import pvc.Exceptions.ConfigFileCorruptedError;
+import pvc.Exceptions.PVCException;
 import pvc.Exceptions.ProcessExecutionError;
+import pvc.Exceptions.RepositoryDoesNotExist;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,7 +13,7 @@ import java.util.Scanner;
 
 public class ContributorConfig implements Handler<String[]> {
 
-    public void handle(String[] configArgs) throws ConfigFileCorruptedError, ProcessExecutionError {
+    public void handle(String[] configArgs) throws PVCException {
         if (Checker.isRepositoryExist()) {
             try {
                 String configFilePath = System.getProperty("user.dir") + RepositoryInitializer.pvcMainFolderName
@@ -45,7 +47,7 @@ public class ContributorConfig implements Handler<String[]> {
             }
         }
         else
-            throw new ConfigFileCorruptedError();
+            throw new RepositoryDoesNotExist();
     }
 
 }

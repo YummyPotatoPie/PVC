@@ -1,7 +1,9 @@
 package pvc;
 
 import pvc.Exceptions.AddedFileDoesNotExist;
+import pvc.Exceptions.PVCException;
 import pvc.Exceptions.ProcessExecutionError;
+import pvc.Exceptions.RepositoryDoesNotExist;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 
 public class FileAdder implements Handler<String> {
 
-    public void handle(String filePath) throws ProcessExecutionError, AddedFileDoesNotExist {
+    public void handle(String filePath) throws PVCException {
         if (Checker.isRepositoryExist()) {
             File addedFile = new File(filePath);
 
@@ -32,6 +34,8 @@ public class FileAdder implements Handler<String> {
                 throw new AddedFileDoesNotExist();
             }
         }
+        else
+            throw new RepositoryDoesNotExist();
     }
 
     private boolean isNotRepetitive(String filePath) {
