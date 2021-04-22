@@ -33,10 +33,20 @@ class Commands {
             .hasArg(true)
             .build();
 
+    public final static String commitOptName = "commit";
+    public final static String commitOptDesc = "Commit added files";
+    private final static Option commitOpt = Option.builder()
+            .longOpt(commitOptName)
+            .desc(commitOptDesc)
+            .optionalArg(true)
+            .numberOfArgs(1)
+            .build();
+
     public static Options getPVCOptions() {
         pvcOptions.addOption(initialization);
         pvcOptions.addOption(contributorConfig);
         pvcOptions.addOption(addOpt);
+        pvcOptions.addOption(commitOpt);
         return pvcOptions;
     }
 
