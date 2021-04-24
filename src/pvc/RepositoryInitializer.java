@@ -6,17 +6,9 @@ import java.io.IOException;
 
 import pvc.Exceptions.*;
 
-public class RepositoryInitializer implements Handler<String> {
+import static pvc.PathsAndTokens.*;
 
-    public final static String pvcMainFolderName = "\\.pvc";
-    public final static String pvcCommitsFolder = "\\commits";
-    public final static String pvcBranchesFolder = "\\branches";
-    public final static String pvcConfigFileName = "config";
-    public final static String pvcHEADFileName = "HEAD";
-    public final static String pvcAddFile = "add";
-    public final static String defaultBranchName = "main";
-    public final static String nullString = "null";
-    public final static String zeroCommitString = "0";
+public class RepositoryInitializer implements Handler<String> {
 
     public void handle(String path) throws PVCException {
 
