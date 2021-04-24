@@ -11,13 +11,14 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import static pvc.PathsAndTokens.*;
+
 public class ContributorConfig implements Handler<String[]> {
 
     public void handle(String[] configArgs) throws PVCException {
         if (Checker.isRepositoryExist()) {
             try {
-                String configFilePath = System.getProperty("user.dir") + RepositoryInitializer.pvcMainFolderName
-                        + "\\" + RepositoryInitializer.pvcConfigFileName;
+                String configFilePath = System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcConfigFileName;
 
                 Scanner configFileReader = new Scanner(new File(configFilePath));
                 String[] oldData = configFileReader.nextLine().split(" ");
@@ -27,10 +28,10 @@ public class ContributorConfig implements Handler<String[]> {
                 if (configArgs.length < oldData.length) {
                     int currentArg = 0;
                     for (;currentArg < configArgs.length; currentArg++)
-                        newData += configArgs[currentArg] + " ";
+                        newData = newData.concat(configArgs[currentArg] + " ");
 
                     for (; currentArg < oldData.length; currentArg++)
-                        newData += oldData[currentArg] + " ";
+                        newData = newData.concat(oldData[currentArg] + " ");
                 }
                 else
                     newData = configArgs[0] + " " + configArgs[1] + " ";

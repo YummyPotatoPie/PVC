@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import static pvc.PathsAndTokens.*;
+
 public class FileAdder implements Handler<String> {
 
     public void handle(String filePath) throws PVCException {
@@ -21,7 +23,7 @@ public class FileAdder implements Handler<String> {
 
                 try {
                     FileWriter writer = new FileWriter(System.getProperty("user.dir") +
-                            RepositoryInitializer.pvcMainFolderName + "\\" + RepositoryInitializer.pvcAddFile, true);
+                            pvcMainFolderName + "\\" + pvcAddFile, true);
 
                     writer.write(filePath + "\n");
                     writer.close();
@@ -39,8 +41,7 @@ public class FileAdder implements Handler<String> {
     }
 
     private boolean isNotRepetitive(String filePath) {
-        Scanner scanner = new Scanner(System.getProperty("user.dir" +
-                RepositoryInitializer.pvcMainFolderName) + "\\" + RepositoryInitializer.pvcAddFile);
+        Scanner scanner = new Scanner(System.getProperty("user.dir" + pvcMainFolderName) + "\\" + pvcAddFile);
 
         while (scanner.hasNextLine()) {
             if (scanner.nextLine().equals(filePath)) {
