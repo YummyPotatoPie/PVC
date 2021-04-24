@@ -65,7 +65,7 @@ public class Committer implements Handler<String> {
     }
 
     private void addedFilesToBinaryRepesentation() {
-        
+
     }
 
 }
