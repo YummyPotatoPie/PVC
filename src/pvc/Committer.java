@@ -12,6 +12,8 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static pvc.PathsAndTokens.*;
+
 public class Committer implements Handler<String> {
 
     public void handle(String message) throws PVCException  {
@@ -20,12 +22,10 @@ public class Committer implements Handler<String> {
             throw new RepositoryDoesNotExist();
 
         String commitHash = getCommitHash();
-        String path = System.getProperty("user.dir") + RepositoryInitializer.pvcMainFolderName +
-                RepositoryInitializer.pvcCommitsFolder;
+        String path = System.getProperty("user.dir") + pvcMainFolderName + pvcCommitsFolder;
 
-        if (Checker.isFolderExist(commitHash.substring(0, 2))) {
+        if (Checker.isFolderExist(commitHash.substring(0, 2)))
             createCommitFile(path + "\\" + commitHash.substring(0, 2) + "\\" + commitHash);
-        }
         else {
             createCommitFolder(path + "\\" + commitHash.substring(0, 2));
             createCommitFile(path + "\\" + commitHash.substring(0, 2) + "\\" + commitHash);
@@ -62,6 +62,10 @@ public class Committer implements Handler<String> {
         catch (IOException ioe) {
             throw new ProcessExecutionError();
         }
+    }
+
+    private void addedFilesToBinaryRepesentation() {
+        
     }
 
 }
