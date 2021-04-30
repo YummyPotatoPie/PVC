@@ -3,6 +3,8 @@ package pvc;
 import org.apache.commons.cli.*;
 import pvc.Exceptions.PVCException;
 
+import static pvc.PathsAndTokens.nullMessage;
+
 public class CommandHandler implements Handler<CommandLine> {
 
     public static void main(String[] args) {
@@ -54,7 +56,11 @@ public class CommandHandler implements Handler<CommandLine> {
         if (cmd.hasOption(Commands.commitOptName)) {
 
             Committer commiter = new Committer();
-            commiter.handle("message");
+
+            if (cmd.getArgs().length != 0)
+                commiter.handle(cmd.getOptionValues(Commands.addFileOptName)[0]);
+            else
+                commiter.handle(nullMessage);
 
         }
     }
