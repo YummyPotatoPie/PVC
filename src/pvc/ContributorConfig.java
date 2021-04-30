@@ -16,7 +16,7 @@ import static pvc.PathsAndTokens.*;
 public class ContributorConfig implements Handler<String[]> {
 
     public void handle(String[] configArgs) throws PVCException {
-        if (Checker.isRepositoryExist()) {
+        if (Utilites.isRepositoryExist()) {
             try {
                 String configFilePath = System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcConfigFileName;
 
