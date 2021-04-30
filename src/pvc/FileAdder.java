@@ -15,7 +15,7 @@ import static pvc.PathsAndTokens.*;
 public class FileAdder implements Handler<String> {
 
     public void handle(String filePath) throws PVCException {
-        if (Checker.isRepositoryExist()) {
+        if (Utilites.isRepositoryExist()) {
             File addedFile = new File(filePath);
 
             if (addedFile.exists()) {
