@@ -42,11 +42,20 @@ class Commands {
             .numberOfArgs(1)
             .build();
 
+    public final static String branchOptName = "branch";
+    public final static String branchOptDesc = "Command can add new branches";
+    private final static Option branchOpt = Option.builder()
+            .longOpt(branchOptName)
+            .desc(branchOptDesc)
+            .hasArg(true)
+            .build();
+
     public static Options getPVCOptions() {
         pvcOptions.addOption(initialization);
         pvcOptions.addOption(contributorConfig);
         pvcOptions.addOption(addOpt);
         pvcOptions.addOption(commitOpt);
+        pvcOptions.addOption(branchOpt);
         return pvcOptions;
     }
 
