@@ -56,11 +56,16 @@ public class CommandHandler implements Handler<CommandLine> {
         if (cmd.hasOption(Commands.commitOptName)) {
 
             Committer commiter = new Committer();
-
-            if (cmd.getArgs().length != 0)
-                commiter.handle(cmd.getOptionValues(Commands.addFileOptName)[0]);
+            if (cmd.getOptionValues(Commands.commitOptName).length != 0)
+                commiter.handle(cmd.getOptionValues(Commands.commitOptName)[0]);
             else
                 commiter.handle(nullMessage);
+
+        }
+        if (cmd.hasOption(Commands.branchOptName)) {
+
+            Brancher brancher = new Brancher();
+            brancher.handle(cmd.getOptionValue(Commands.branchOptName));
 
         }
     }
