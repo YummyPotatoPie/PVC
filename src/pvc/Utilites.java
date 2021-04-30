@@ -1,14 +1,17 @@
 package pvc;
 
 import pvc.Exceptions.HEADFileCorruptedError;
+import pvc.Exceptions.ProcessExecutionError;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import static pvc.PathsAndTokens.*;
 
-public class Checker {
+public class Utilites {
 
     public static boolean isRepositoryExist() {
         return new File(System.getProperty("user.dir") + pvcMainFolderName).exists();
@@ -43,6 +46,18 @@ public class Checker {
         }
         catch (FileNotFoundException e) {
             throw new HEADFileCorruptedError();
+        }
+    }
+
+    public static void HEADRewrite(String branchName, String commitName, String commitID) throws ProcessExecutionError {
+        File branchFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcHEADFileName);
+
+        try {
+            FileWriter writer = new FileWriter(branchFile);
+            writer.write(branchName + " " + commitName + " " + commitID);
+            writer.close();
+        } catch (IOException e) {
+            throw new ProcessExecutionError();
         }
     }
 
