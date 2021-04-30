@@ -125,7 +125,7 @@ public class Committer implements Handler<String> {
 
         try {
             FileWriter writer = new FileWriter(branchFile);
-            writer.write(commitHash + " " + commitID);
+            writer.append(commitHash + " " + commitID + "\n");
             writer.close();
         } catch (IOException e) {
             throw new ProcessExecutionError();
