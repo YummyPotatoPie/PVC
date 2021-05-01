@@ -2,7 +2,7 @@
 
 ### Simple program to control changes in your projects
 ---
-##### pvc can handle commands like:
+#### pvc can handle commands like:
 - init -Initialization of repository
 - config - Configure  config file with name of contributor and his email
 - head - Display information of HEAD file
