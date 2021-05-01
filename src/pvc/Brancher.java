@@ -47,11 +47,13 @@ public class Brancher implements Handler<String> {
 
             while (reader.hasNextLine()) {
                 commitData = reader.nextLine();
-                writer.append(commitData);
+                writer.append(commitData).append("\n");
             }
 
             String[] data = commitData.split(" ");
             Utilites.HEADRewrite(branchName, data[0], data[1]);
+            reader.close();
+            writer.close();
         }
         catch (IOException e) {
             throw new ProcessExecutionError();
