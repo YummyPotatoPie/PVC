@@ -15,29 +15,28 @@ import static pvc.PathsAndTokens.*;
 public class FileAdder implements Handler<String> {
 
     public void handle(String filePath) throws PVCException {
-        if (Utilites.isRepositoryExist()) {
-            File addedFile = new File(filePath);
+        if (!Utilites.isRepositoryExist())
+            throw new RepositoryDoesNotExist();
 
-            if (addedFile.exists()) {
-                if (!isNotRepetitive(filePath)) System.exit(1);
+        File addedFile = new File(filePath);
 
-                try {
-                    FileWriter writer = new FileWriter(System.getProperty("user.dir") +
-                            pvcMainFolderName + "\\" + pvcAddFile, true);
+        if (addedFile.exists()) {
+            if (!isNotRepetitive(filePath)) System.exit(1);
 
-                    writer.write(filePath + "\n");
-                    writer.close();
-                }
-                catch (IOException ioe) {
-                    throw new ProcessExecutionError();
-                }
+            try {
+                FileWriter writer = new FileWriter(System.getProperty("user.dir") +
+                        pvcMainFolderName + "\\" + pvcAddFile, true);
+
+                writer.write(filePath + "\n");
+                writer.close();
             }
-            else {
-                throw new AddedFileDoesNotExist();
+            catch (IOException ioe) {
+                throw new ProcessExecutionError();
             }
         }
-        else
-            throw new RepositoryDoesNotExist();
+        else {
+            throw new AddedFileDoesNotExist();
+        }
     }
 
     private boolean isNotRepetitive(String filePath) {
