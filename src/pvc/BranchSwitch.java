@@ -9,10 +9,9 @@ public class BranchSwitch implements Handler<String> {
         if (!Utilites.isBranchExist(branchName))
             throw new BranchDoesNotExistError();
 
-        String currentBranch = Utilites.currentBranch();
-        String[] currentBranchData = Utilites.readLastCommitData(currentBranch).split(" ");
+        String[] branchData = Utilites.readLastCommitData(branchName).split(" ");
 
-        Utilites.HEADRewrite(branchName, currentBranchData[0], currentBranchData[1]);
+        Utilites.HEADRewrite(branchName, branchData[0], branchData[1]);
     }
 
 }
