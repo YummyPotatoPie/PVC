@@ -80,6 +80,13 @@ public class CommandHandler implements Handler<CommandLine> {
             merger.handle(cmd.getOptionValue(Commands.mergeOptName));
 
         }
+
+        if (cmd.hasOption(Commands.headOptName)) {
+
+            HEADInformator informator = new HEADInformator();
+            informator.handle(cmd.getOptionValue(Commands.headOptName));
+
+        }
     }
 
 }
