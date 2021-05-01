@@ -66,6 +66,15 @@ class Commands {
             .hasArg(true)
             .build();
 
+    public final static String headOptName = "head";
+    public final static String headOptDesc = "Display HEAD data";
+    public final static Option headOpt = Option.builder()
+            .longOpt(headOptName)
+            .desc(headOptDesc)
+            .optionalArg(true)
+            .numberOfArgs(1)
+            .build();
+
     public static Options getPVCOptions() {
         pvcOptions.addOption(initialization);
         pvcOptions.addOption(contributorConfig);
@@ -74,6 +83,7 @@ class Commands {
         pvcOptions.addOption(branchOpt);
         pvcOptions.addOption(switchOpt);
         pvcOptions.addOption(mergeOpt);
+        pvcOptions.addOption(headOpt);
         return pvcOptions;
     }
 
