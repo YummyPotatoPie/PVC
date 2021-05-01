@@ -68,6 +68,12 @@ public class CommandHandler implements Handler<CommandLine> {
             brancher.handle(cmd.getOptionValue(Commands.branchOptName));
 
         }
+        if (cmd.hasOption(Commands.switchOptName)) {
+
+            BranchSwitch switcher = new BranchSwitch();
+            switcher.handle(cmd.getOptionValue(Commands.switchOptName));
+
+        }
     }
 
 }
