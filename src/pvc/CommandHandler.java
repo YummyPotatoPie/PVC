@@ -74,6 +74,12 @@ public class CommandHandler implements Handler<CommandLine> {
             switcher.handle(cmd.getOptionValue(Commands.switchOptName));
 
         }
+        if (cmd.hasOption(Commands.mergeOptName)) {
+
+            Merger merger = new Merger();
+            merger.handle(cmd.getOptionValue(Commands.mergeOptName));
+
+        }
     }
 
 }
