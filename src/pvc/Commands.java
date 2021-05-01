@@ -50,12 +50,21 @@ class Commands {
             .hasArg(true)
             .build();
 
+    public final static String switchOptName = "switch";
+    public final static String switchOptDesc = "Switches branch";
+    private final static Option switchOpt = Option.builder()
+            .longOpt(switchOptName)
+            .desc(switchOptDesc)
+            .hasArg(true)
+            .build();
+
     public static Options getPVCOptions() {
         pvcOptions.addOption(initialization);
         pvcOptions.addOption(contributorConfig);
         pvcOptions.addOption(addOpt);
         pvcOptions.addOption(commitOpt);
         pvcOptions.addOption(branchOpt);
+        pvcOptions.addOption(switchOpt);
         return pvcOptions;
     }
 
