@@ -61,4 +61,28 @@ public class Utilites {
         }
     }
 
+    public static boolean isBranchExist(String branchName) {
+        return new File(System.getProperty("user.dir") + pvcMainFolderName +
+                pvcBranchesFolder + "\\" + branchName).exists();
+    }
+
+    public static String readLastCommitData(String branchName) throws ProcessExecutionError {
+        File branchFile = new File(System.getProperty("user.dir") + pvcMainFolderName +
+                pvcBranchesFolder + "\\" + branchName);
+
+        try {
+            Scanner scanner = new Scanner(branchFile);
+
+            String currentData = "";
+
+            while (scanner.hasNextLine())
+                currentData = scanner.nextLine();
+
+            return currentData;
+        }
+        catch (IOException ioe) {
+            throw new ProcessExecutionError();
+        }
+    }
+
 }
