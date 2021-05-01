@@ -36,7 +36,7 @@ public class Committer implements Handler<String> {
             createCommitFile(path + "\\" + commitHash.substring(0, 2) + "\\" + commitHash);
         }
 
-        addedFilesToBinaryRepesentation(commitHash.substring(0, 2), commitHash, message);
+        addedFilesToCommit(commitHash.substring(0, 2), commitHash, message);
         addFileFlush();
         addCommitDataToBranchFile(Utilites.currentBranch(), commitHash, Integer.toString(Utilites.currentCommitID() + 1));
         Utilites.HEADRewrite(Utilites.currentBranch(), commitHash, Integer.toString(Utilites.currentCommitID() + 1));
@@ -76,30 +76,30 @@ public class Committer implements Handler<String> {
         }
     }
 
-    private void addedFilesToBinaryRepesentation(String commitFolderPath, String commitFileHash, String message) throws ProcessExecutionError {
+    private void addedFilesToCommit(String commitFolderPath, String commitFileHash, String message) throws ProcessExecutionError {
         String path = System.getProperty("user.dir") + pvcMainFolderName;
         File commitInput = new File(path + pvcCommitsFolder + "\\" + commitFolderPath + "\\" + commitFileHash);
         File addFile = new File(path + "\\" + pvcAddFile);
 
         try {
             Scanner scanner = new Scanner(addFile);
-            OutputStream binaryStream = new FileOutputStream(commitInput);
-            binaryStream.write((message + PathsAndTokens.message).getBytes());
+            FileWriter outputStream = new FileWriter(commitInput);
+            outputStream.append(message).append(PathsAndTokens.message).append("\n");
 
             while (scanner.hasNextLine()) {
                 String filename = scanner.nextLine();
                 File addedFilePath = new File(System.getProperty("user.dir") + "\\" + filename);
                 Scanner addedFileScanner = new Scanner(addedFilePath);
 
-                binaryStream.write((filename + fileStart).getBytes());
+                outputStream.append(filename).append(fileStart);
 
                 while (addedFileScanner.hasNextLine())
-                    binaryStream.write(addedFileScanner.nextLine().getBytes());
+                    outputStream.append(addedFileScanner.nextLine()).append("\n");
 
-                binaryStream.write(("\n" + filename + fileEnd).getBytes());
+                outputStream.append("\n").append(filename).append(fileEnd);
                 addedFileScanner.close();
             }
-            binaryStream.close();
+            outputStream.close();
         }
         catch (IOException | NoSuchElementException e) {
             throw new ProcessExecutionError();
@@ -124,8 +124,8 @@ public class Committer implements Handler<String> {
         File branchFile = new File(System.getProperty("user.dir") + pvcMainFolderName + pvcBranchesFolder + "\\" + branchName);
 
         try {
-            FileWriter writer = new FileWriter(branchFile);
-            writer.append(commitHash + " " + commitID + "\n");
+            FileWriter writer = new FileWriter(branchFile, true);
+            writer.append(commitHash).append(" ").append(commitID).append("\n");
             writer.close();
         } catch (IOException e) {
             throw new ProcessExecutionError();
