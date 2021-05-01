@@ -58,6 +58,14 @@ class Commands {
             .hasArg(true)
             .build();
 
+    public final static String mergeOptName = "merge";
+    public final static String mergeOptDesc = "Merge branch";
+    public final static Option mergeOpt = Option.builder()
+            .longOpt(mergeOptName)
+            .desc(mergeOptDesc)
+            .hasArg(true)
+            .build();
+
     public static Options getPVCOptions() {
         pvcOptions.addOption(initialization);
         pvcOptions.addOption(contributorConfig);
@@ -65,6 +73,7 @@ class Commands {
         pvcOptions.addOption(commitOpt);
         pvcOptions.addOption(branchOpt);
         pvcOptions.addOption(switchOpt);
+        pvcOptions.addOption(mergeOpt);
         return pvcOptions;
     }
 
