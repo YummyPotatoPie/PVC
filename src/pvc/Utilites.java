@@ -37,6 +37,18 @@ public class Utilites {
         }
     }
 
+    public static int currentCommitHash() throws HEADFileCorruptedError {
+        File headFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcHEADFileName);
+        try {
+            Scanner scanner = new Scanner(headFile);
+            String[] headData = scanner.nextLine().split(" ");
+            return Integer.parseInt(headData[1]);
+        }
+        catch (FileNotFoundException e) {
+            throw new HEADFileCorruptedError();
+        }
+    }
+
     public static int currentCommitID() throws HEADFileCorruptedError {
         File headFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcHEADFileName);
         try {
