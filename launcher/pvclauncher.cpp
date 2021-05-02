@@ -27,8 +27,6 @@ int main(int argc, char* argv[]) {
     std::wstring pvcArgsWstring = std::wstring(pvcArgsString.begin(), pvcArgsString.end());
     std::wstring executeCommand = pvcJarExecute + pvcArgsWstring;
 
-    std::wcout << executeCommand << std::endl;
-
     //Deprecated
     //ShellExecute(NULL, L"open", L"cmd.exe", executeCommand.c_str() , NULL, SW_HIDE);
     
