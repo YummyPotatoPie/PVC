@@ -24,7 +24,6 @@ public class ContributorConfig implements Handler<String[]> {
             return;
         }
 
-
         try {
             String configFilePath = System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcConfigFileName;
 
