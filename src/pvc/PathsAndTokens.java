@@ -11,9 +11,10 @@ public class PathsAndTokens {
     public final static String defaultBranchName = "main";
     public final static String nullString = "null";
     public final static String zeroCommitString = "0";
-    public final static String fileStart = "_FILE_START\n";
-    public final static String fileEnd = "_FILE_END\n";
-    public final static String message = "_MESSAGE\n";
+    public final static String fileStart = "_FILE_START";
+    public final static String fileEnd = "_FILE_END";
+    public final static String message = "_MESSAGE";
     public final static String nullMessage = "NULLMESSAGE";
+    public final static String committerInfo = "COMMETTERINFO_";
 
 }
