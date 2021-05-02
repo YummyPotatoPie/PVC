@@ -84,6 +84,8 @@ public class Committer implements Handler<String> {
         try {
             Scanner scanner = new Scanner(addFile);
             FileWriter outputStream = new FileWriter(commitInput);
+            outputStream.append(committerInfo).append(Utilites.getConfigData()[0]).append("_")
+                    .append(Utilites.getConfigData()[1]).append("\n");
             outputStream.append(message).append(PathsAndTokens.message).append("\n");
 
             while (scanner.hasNextLine()) {
@@ -91,12 +93,12 @@ public class Committer implements Handler<String> {
                 File addedFilePath = new File(System.getProperty("user.dir") + "\\" + filename);
                 Scanner addedFileScanner = new Scanner(addedFilePath);
 
-                outputStream.append(filename).append(fileStart);
+                outputStream.append(filename).append(fileStart).append("\n");
 
                 while (addedFileScanner.hasNextLine())
-                    outputStream.append(addedFileScanner.nextLine()).append("\n");
+                    outputStream.append(Utilites.toBinaryString(addedFileScanner.nextLine())).append("\n");
 
-                outputStream.append("\n").append(filename).append(fileEnd);
+                outputStream.append("\n").append(filename).append(fileEnd).append("\n");
                 addedFileScanner.close();
             }
             outputStream.close();
