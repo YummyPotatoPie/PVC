@@ -19,6 +19,12 @@ public class ContributorConfig implements Handler<String[]> {
         if (!Utilites.isRepositoryExist())
             throw new RepositoryDoesNotExist();
 
+        if (configArgs == null) {
+            System.out.println("Nothing to config");
+            return;
+        }
+
+
         try {
             String configFilePath = System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcConfigFileName;
 
@@ -29,7 +35,7 @@ public class ContributorConfig implements Handler<String[]> {
             String newData = "";
             if (configArgs.length < oldData.length) {
                 int currentArg = 0;
-                for (;currentArg < configArgs.length; currentArg++)
+                for (; currentArg < configArgs.length; currentArg++)
                     newData = newData.concat(configArgs[currentArg] + " ");
 
                 for (; currentArg < oldData.length; currentArg++)

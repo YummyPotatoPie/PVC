@@ -56,7 +56,7 @@ public class CommandHandler implements Handler<CommandLine> {
         if (cmd.hasOption(Commands.commitOptName)) {
 
             Committer commiter = new Committer();
-            if (cmd.getOptionValues(Commands.commitOptName).length != 0)
+            if (cmd.getOptionValues(Commands.commitOptName) != null)
                 commiter.handle(cmd.getOptionValues(Commands.commitOptName)[0]);
             else
                 commiter.handle(nullMessage);
