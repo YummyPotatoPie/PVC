@@ -25,6 +25,21 @@ public class Utilites {
         return new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcAddFile).length() == 0;
     }
 
+    public static String[] getConfigData() throws ProcessExecutionError {
+        try {
+            File configFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcConfigFileName);
+            Scanner scanner = new Scanner(configFile);
+
+            String[] data = scanner.nextLine().split(" ");
+            scanner.close();
+            return data;
+
+        }
+        catch (IOException ioe) {
+            throw new ProcessExecutionError();
+        }
+    }
+
     public static String currentBranch() throws HEADFileCorruptedError {
         File headFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcHEADFileName);
         try {
@@ -95,6 +110,15 @@ public class Utilites {
         catch (IOException ioe) {
             throw new ProcessExecutionError();
         }
+    }
+
+    public static String toBinaryString(String str) {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++)
+            result.append(Integer.toBinaryString(str.charAt(i)));
+
+        return result.toString();
     }
 
 }
