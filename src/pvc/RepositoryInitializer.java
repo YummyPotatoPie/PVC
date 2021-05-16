@@ -8,6 +8,9 @@ import pvc.Exceptions.*;
 
 import static pvc.PathsAndTokens.*;
 
+/**
+ * Class which initialize repository
+ */
 public class RepositoryInitializer implements Handler<String> {
 
     public void handle(String path) throws PVCException {
@@ -26,6 +29,9 @@ public class RepositoryInitializer implements Handler<String> {
             throw new InitializationError();
     }
 
+    /**
+     * Method which set hidden attribute to ".pvc" folder
+     */
     private void setHiddenAttribute(File file) throws ProcessExecutionError {
         try {
             Process createHiddenFile = Runtime.getRuntime().exec("attrib +H " + file.getPath());
@@ -37,6 +43,9 @@ public class RepositoryInitializer implements Handler<String> {
         }
     }
 
+    /**
+     * Method which create ".pvc/commit" folder
+     */
     private void createCommitFolder(String path) throws CreatingFolderSystemError {
         if (!(new File(path + pvcCommitsFolder).mkdir())) {
             emergencyDeletion(new File(path));
@@ -44,6 +53,9 @@ public class RepositoryInitializer implements Handler<String> {
         }
     }
 
+    /**
+     * Method which create ".pvc/branches" folder
+     */
     private void createBranchesFolder(String path) throws CreatingFolderSystemError, ProcessExecutionError {
         if (new File(path + pvcBranchesFolder).mkdir()) {
             File defaultBranchFile = new File(path + pvcBranchesFolder + "\\" + defaultBranchName);
@@ -65,6 +77,9 @@ public class RepositoryInitializer implements Handler<String> {
         }
     }
 
+    /**
+     * Method which create ".pvc/config" file
+     */
     private void createConfigFile(String path) throws ProcessExecutionError {
         File configFile = new File(path + pvcMainFolderName, pvcConfigFileName);
 
@@ -81,6 +96,9 @@ public class RepositoryInitializer implements Handler<String> {
         }
     }
 
+    /**
+     * Method which create ".pvc/HEAD" file
+     */
     private void createHEADFile(String path) throws ProcessExecutionError {
         File HEADFile = new File(path + pvcMainFolderName, pvcHEADFileName);
 
@@ -97,6 +115,9 @@ public class RepositoryInitializer implements Handler<String> {
         }
     }
 
+    /**
+     * Method which create ".pvc/add" file
+     */
     private void createAddFile(String path) throws ProcessExecutionError {
         File addFile = new File(path + pvcMainFolderName, pvcAddFile);
 
@@ -110,6 +131,10 @@ public class RepositoryInitializer implements Handler<String> {
         }
     }
 
+    /**
+     * Deletes ".../.pvc" folder if something went wrong
+     * @param file ".../.pvc" folder
+     */
     private void emergencyDeletion(File file) {
         if (file.isDirectory()) {
             File[] directoryFiles = file.listFiles();

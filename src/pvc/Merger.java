@@ -10,6 +10,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Class which handle "merge" command
+ */
 public class Merger implements Handler<String> {
 
     public void handle(String branchName) throws PVCException {
@@ -27,6 +30,11 @@ public class Merger implements Handler<String> {
 
     }
 
+    /**
+     * Method for checking if commit histories are compatible
+     * @param branchName Name of branch
+     * @return True if compatible, else false
+     */
     private boolean isCompatibleCommitHistory(String branchName) throws ProcessExecutionError, HEADFileCorruptedError {
         File currentBranch = new File(System.getProperty("user.dir") + pvcMainFolderName +
                 pvcBranchesFolder + "\\" + Utilites.currentBranch());
@@ -62,6 +70,10 @@ public class Merger implements Handler<String> {
 
     }
 
+    /**
+     * Method which merge current branch with another branch
+     * @param branchName Branch name as String
+     */
     private void mergeBranches(String branchName) throws ProcessExecutionError, HEADFileCorruptedError {
         try {
             File currentBranch = new File(System.getProperty("user.dir") + pvcMainFolderName +

@@ -1,5 +1,8 @@
 package pvc;
 
+/**
+ * Class contains all necessary tokens and paths must have to pvc works
+ */
 public class PathsAndTokens {
 
     public final static String pvcMainFolderName = "\\.pvc";

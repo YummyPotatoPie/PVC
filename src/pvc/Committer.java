@@ -16,6 +16,9 @@ import java.util.Scanner;
 
 import static pvc.PathsAndTokens.*;
 
+/**
+ * Class which handle "commit" command
+ */
 public class Committer implements Handler<String> {
 
     public void handle(String message) throws PVCException {
@@ -43,6 +46,10 @@ public class Committer implements Handler<String> {
 
     }
 
+    /**
+     * Method which return hash of current commit
+     * @return Commit hash as String
+     */
     private String getCommitHash() throws ProcessExecutionError {
         try {
             MessageDigest commitHash = MessageDigest.getInstance("SHA-256");
@@ -57,6 +64,9 @@ public class Committer implements Handler<String> {
         }
     }
 
+    /**
+     * Method which create commit folder if need to
+     */
     private void createCommitFolder(String path) throws ProcessExecutionError {
         File commitFolder = new File(path);
 
@@ -64,6 +74,9 @@ public class Committer implements Handler<String> {
             throw new ProcessExecutionError();
     }
 
+    /**
+     * Method which create current commit file
+     */
     private void createCommitFile(String path) throws ProcessExecutionError {
         File commitFile = new File(path);
 
@@ -76,6 +89,12 @@ public class Committer implements Handler<String> {
         }
     }
 
+    /**
+     * Method which add file to current commit file
+     * @param commitFolderPath Path of folder which will contains current commit data
+     * @param commitFileHash Hash of current commit
+     * @param message Message of current commit
+     */
     private void addedFilesToCommit(String commitFolderPath, String commitFileHash, String message) throws ProcessExecutionError {
         String path = System.getProperty("user.dir") + pvcMainFolderName;
         File commitInput = new File(path + pvcCommitsFolder + "\\" + commitFolderPath + "\\" + commitFileHash);
@@ -109,6 +128,9 @@ public class Committer implements Handler<String> {
 
     }
 
+    /**
+     * Method which flush "Add" file in ".pvc" folder
+     */
     private void addFileFlush() throws ProcessExecutionError {
         String path = System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcAddFile;
         File file = new File(path);
@@ -122,6 +144,12 @@ public class Committer implements Handler<String> {
         }
     }
 
+    /**
+     * Method which add data of current commit to current branch
+     * @param branchName Name of current branch
+     * @param commitHash Hash of current commit
+     * @param commitID ID of current commit
+     */
     private void addCommitDataToBranchFile(String branchName, String commitHash, String commitID) throws ProcessExecutionError {
         File branchFile = new File(System.getProperty("user.dir") + pvcMainFolderName + pvcBranchesFolder + "\\" + branchName);
 

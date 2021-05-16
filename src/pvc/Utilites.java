@@ -11,20 +11,39 @@ import java.util.Scanner;
 
 import static pvc.PathsAndTokens.*;
 
+/**
+ * Class contains useful utility methods
+ */
 public class Utilites {
 
+    /**
+     * Checks if repository exist or not
+     * @return True if repository exist, else false
+     */
     public static boolean isRepositoryExist() {
         return new File(System.getProperty("user.dir") + pvcMainFolderName).exists();
     }
 
+    /**
+     * Checks if folder exist or not
+     * @return True if folder exist, else false
+     */
     public static boolean isFolderExist(String path) {
         return new File(path).exists();
     }
 
+    /**
+     * Checks if ".pvc/add" file exist or not
+     * @return True if empty, else false
+     */
     public static boolean isAddFileEmpty() {
         return new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcAddFile).length() == 0;
     }
 
+    /**
+     * Return config data (contributor name, e-mail)
+     * @return Config data from ".pvc/config" file
+     */
     public static String[] getConfigData() throws ProcessExecutionError {
         try {
             File configFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcConfigFileName);
@@ -40,6 +59,10 @@ public class Utilites {
         }
     }
 
+    /**
+     * Method that returns current branch name
+     * @return Current branch name
+     */
     public static String currentBranch() throws HEADFileCorruptedError {
         File headFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcHEADFileName);
         try {
@@ -52,6 +75,10 @@ public class Utilites {
         }
     }
 
+    /**
+     * Method that returns current commit hash
+     * @return Current commit hash
+     */
     public static int currentCommitHash() throws HEADFileCorruptedError {
         File headFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcHEADFileName);
         try {
@@ -64,6 +91,10 @@ public class Utilites {
         }
     }
 
+    /**
+     * Method that returns current commit ID
+     * @return Current commit ID
+     */
     public static int currentCommitID() throws HEADFileCorruptedError {
         File headFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcHEADFileName);
         try {
@@ -76,6 +107,12 @@ public class Utilites {
         }
     }
 
+    /**
+     * Method which rewrites ".pvc/HEAD" file data
+     * @param branchName Current branch name
+     * @param commitName Current commit name
+     * @param commitID Current commit ID
+     */
     public static void HEADRewrite(String branchName, String commitName, String commitID) throws ProcessExecutionError {
         File branchFile = new File(System.getProperty("user.dir") + pvcMainFolderName + "\\" + pvcHEADFileName);
 
@@ -88,11 +125,19 @@ public class Utilites {
         }
     }
 
+    /**
+     * Checks if branch exist or not
+     * @return True if branch exist, else false
+     */
     public static boolean isBranchExist(String branchName) {
         return new File(System.getProperty("user.dir") + pvcMainFolderName +
                 pvcBranchesFolder + "\\" + branchName).exists();
     }
 
+    /**
+     * Method which return last commit data
+     * @return Commit data from current branch
+     */
     public static String readLastCommitData(String branchName) throws ProcessExecutionError {
         File branchFile = new File(System.getProperty("user.dir") + pvcMainFolderName +
                 pvcBranchesFolder + "\\" + branchName);
@@ -112,6 +157,11 @@ public class Utilites {
         }
     }
 
+    /**
+     * Method which rewrite file data to binary representation
+     * @param str Line from file
+     * @return Line in binary format
+     */
     public static String toBinaryString(String str) {
         StringBuilder result = new StringBuilder();
 

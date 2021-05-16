@@ -7,6 +7,9 @@ import static pvc.PathsAndTokens.nullMessage;
 
 public class CommandHandler implements Handler<CommandLine> {
 
+    /**
+     * Main method of pvc program
+     */
     public static void main(String[] args) {
         Options options = Commands.getPVCOptions();
 
@@ -34,6 +37,10 @@ public class CommandHandler implements Handler<CommandLine> {
 
     }
 
+    /**
+     * Method which handle command from command line
+     * @param cmd Command from command line
+     */
     public void handle(CommandLine cmd) throws PVCException  {
         if (cmd.hasOption(Commands.initializationOptName)) {
 

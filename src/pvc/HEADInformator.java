@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 import static pvc.PathsAndTokens.*;
 
+/**
+ * Class which handle "head" command
+ */
 public class HEADInformator implements Handler<String> {
 
     public void handle(String property) throws ProcessExecutionError {

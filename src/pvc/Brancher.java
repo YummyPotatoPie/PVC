@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 import static pvc.PathsAndTokens.*;
 
+/**
+ * Class that handle "branch" command
+ */
 public class Brancher implements Handler<String> {
 
     public void handle(String branchName) throws PVCException {
@@ -22,6 +25,10 @@ public class Brancher implements Handler<String> {
 
     }
 
+    /**
+     * Method that creates new branch file
+     * @param branchName Name of new branch
+     */
     private void createBranchFile(String branchName) throws ProcessExecutionError {
         File branch = new File(System.getProperty("user.dir") + pvcMainFolderName + pvcBranchesFolder + "\\" + branchName);
 
@@ -33,6 +40,10 @@ public class Brancher implements Handler<String> {
         }
     }
 
+    /**
+     * Method that rewrites commit to new branch
+     * @param branchName Name of new branch
+     */
     private void rewriteCommits(String branchName) throws ProcessExecutionError, HEADFileCorruptedError {
         File currentBranch = new File(System.getProperty("user.dir") + pvcMainFolderName +
                 pvcBranchesFolder + "\\" + Utilites.currentBranch());

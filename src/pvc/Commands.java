@@ -3,6 +3,9 @@ package pvc;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.Option;
 
+/**
+ * Class which contains pvc's commands descriptions
+ */
 class Commands {
 
     private final static Options pvcOptions = new Options();
@@ -75,6 +78,10 @@ class Commands {
             .numberOfArgs(1)
             .build();
 
+    /**
+     * Method returns pvc's commands
+     * @return Option object that contains pvc's commands
+     */
     public static Options getPVCOptions() {
         pvcOptions.addOption(initialization);
         pvcOptions.addOption(contributorConfig);

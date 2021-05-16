@@ -12,6 +12,9 @@ import java.util.Scanner;
 
 import static pvc.PathsAndTokens.*;
 
+/**
+ * The class that handles the "add" command
+ */
 public class FileAdder implements Handler<String> {
 
     public void handle(String filePath) throws PVCException {
@@ -39,6 +42,11 @@ public class FileAdder implements Handler<String> {
         }
     }
 
+    /**
+     * Method that checks if the path to the file is repeated in the add file
+     * @param filePath Path of file that want to added to commit
+     * @return True if file path not repetitive, else false
+     */
     private boolean isNotRepetitive(String filePath) {
         Scanner scanner = new Scanner(System.getProperty("user.dir" + pvcMainFolderName) + "\\" + pvcAddFile);
 

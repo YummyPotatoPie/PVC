@@ -13,6 +13,9 @@ import java.util.Scanner;
 
 import static pvc.PathsAndTokens.*;
 
+/**
+ * Class which handle "config" command
+ */
 public class ContributorConfig implements Handler<String[]> {
 
     public void handle(String[] configArgs) throws PVCException {
