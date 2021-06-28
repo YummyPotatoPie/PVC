@@ -1,4 +1,4 @@
-# pvc - Potato Version Control
+# PVC - Potato Version Control
 
 ### Simple program to control changes in your projects
 ---
